@@ -63,6 +63,7 @@ export function FletchingCalculator() {
   return (
     <div className="calculator">
       <h1>Fletching Calculator</h1>
+      <p className="calculator-subtitle">Maple logs only</p>
 
       <form onSubmit={handleSubmit}>
         <label>
@@ -159,7 +160,7 @@ export function FletchingCalculator() {
               </span>
             </div>
             <div className="stat">
-              <span className="stat-label">Logs needed</span>
+              <span className="stat-label">Maple logs needed</span>
               <span className="stat-value" data-testid="logs-needed">
                 {formatNumber(result.logs_needed)}
               </span>
