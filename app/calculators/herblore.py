@@ -2,6 +2,7 @@ from fastapi import APIRouter
 from pydantic import BaseModel, Field
 
 from app.core.xp_table import xp_at
+from app.models import StrictModel
 
 NAME = "herblore"
 
@@ -25,7 +26,7 @@ XP_PER_POTION: dict[str, float] = {
 }
 
 
-class HerbQuantities(BaseModel):
+class HerbQuantities(StrictModel):
     guam: int = Field(ge=0)
     marrentill: int = Field(ge=0)
     tarromin: int = Field(ge=0)
@@ -42,7 +43,7 @@ class HerbQuantities(BaseModel):
     torstol: int = Field(ge=0)
 
 
-class Request(BaseModel):
+class Request(StrictModel):
     current_xp: int = Field(ge=0, le=200_000_000)
     target_level: int = Field(ge=1, le=99)
     herbs: HerbQuantities

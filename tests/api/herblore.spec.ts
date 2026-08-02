@@ -53,4 +53,23 @@ test.describe('POST /api/calculators/herblore', () => {
 
     expect(response.status()).toBe(422);
   });
+
+  test('422s on an unexpected top-level field', async ({ request }) => {
+    const response = await request.post('/api/calculators/herblore', {
+      data: { ...WORKED_EXAMPLE_REQUEST, extra_field: 'unexpected' },
+    });
+
+    expect(response.status()).toBe(422);
+  });
+
+  test('422s on an unexpected herb field (e.g. a typo)', async ({ request }) => {
+    const response = await request.post('/api/calculators/herblore', {
+      data: {
+        ...WORKED_EXAMPLE_REQUEST,
+        herbs: { ...WORKED_EXAMPLE_REQUEST.herbs, dwarfweed: 51 },
+      },
+    });
+
+    expect(response.status()).toBe(422);
+  });
 });

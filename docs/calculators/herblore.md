@@ -106,7 +106,8 @@ Validation (Pydantic constraints → automatic 422):
 
 - `current_xp`: `ge=0, le=200_000_000`
 - `target_level`: `ge=1, le=99`
-- herb quantities: `ge=0`
+- herb quantities: `ge=0` (no upper bound — intentional)
+- unknown/extra fields (top-level or within `herbs`) → 422, not silently dropped (`StrictModel`, `app/models.py`)
 
 ## Worked example — use as the first test
 
