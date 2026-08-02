@@ -39,3 +39,24 @@ test('fills the Herblore form and shows the worked example result', async ({ pag
   await expect(page.getByTestId('xp-remaining')).toHaveText('64047.5');
   await expect(page.getByTestId('xp-surplus')).toHaveText('0');
 });
+
+test('blocks an out-of-range current_xp client-side instead of submitting it', async ({
+  page,
+}) => {
+  await page.goto('/');
+
+  const currentXpInput = page.getByTestId('current-xp-input');
+  await currentXpInput.fill('200000001'); // one above the backend's le=200_000_000
+
+  await page.getByTestId('submit-button').click();
+
+  // the browser's native constraint validation should stop the submit
+  // event from firing at all, so no fetch is ever sent
+  await expect(page.getByTestId('result')).not.toBeVisible();
+  await expect(page.getByTestId('error-message')).not.toBeVisible();
+
+  const isRangeOverflow = await currentXpInput.evaluate(
+    (el: HTMLInputElement) => el.validity.rangeOverflow,
+  );
+  expect(isRangeOverflow).toBe(true);
+});

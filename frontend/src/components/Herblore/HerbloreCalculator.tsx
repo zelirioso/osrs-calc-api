@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from 'react';
+import { useState, type SubmitEvent } from 'react';
 import { HERB_NAMES, type HerbQuantities, type HerbloreResponse } from './types';
 
 const ZERO_HERBS = HERB_NAMES.reduce(
@@ -13,7 +13,7 @@ export function HerbloreCalculator() {
   const [result, setResult] = useState<HerbloreResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  async function handleSubmit(event: FormEvent) {
+  async function handleSubmit(event: SubmitEvent) {
     event.preventDefault();
     setError(null);
     setResult(null);
@@ -48,6 +48,7 @@ export function HerbloreCalculator() {
             data-testid="current-xp-input"
             value={currentXp}
             min={0}
+            max={200_000_000}
             onChange={(event) => setCurrentXp(Number(event.target.value))}
           />
         </label>
