@@ -13,21 +13,6 @@
   --danger-bg: #3a1a1a;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color-scheme: light;
-    --bg: #f8fafc;
-    --surface: #ffffff;
-    --border: #e2e8f0;
-    --text: #111827;
-    --text-muted: #6b7280;
-    --accent: #059669;
-    --accent-contrast: #ffffff;
-    --danger: #dc2626;
-    --danger-bg: #fee2e2;
-  }
-}
-
 body {
   margin: 0;
   background: var(--bg);
