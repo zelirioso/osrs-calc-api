@@ -1,5 +1,6 @@
 import { useState, type SubmitEvent } from 'react';
 import { levelAt, xpAt } from '../../core/xpTable';
+import { formatNumber, stripLeadingZeros } from '../../lib/inputFormatting';
 import { HERB_NAMES, type HerbQuantities, type HerbloreResponse } from './types';
 
 type HerbQuantityInputs = Record<keyof HerbQuantities, string>;
@@ -8,17 +9,6 @@ const ZERO_HERBS = HERB_NAMES.reduce(
   (acc, herb) => ({ ...acc, [herb]: '0' }),
   {} as HerbQuantityInputs,
 );
-
-// Strips redundant leading zeros (e.g. "07" -> "7") without touching a lone "0".
-function stripLeadingZeros(value: string): string {
-  return value.replace(/^0+(?=\d)/, '');
-}
-
-// Comma-groups displayed numbers (e.g. 206297.5 -> "206,297.5"). Display only
-// -- never applied to input values, which must stay plain for type="number".
-function formatNumber(value: number): string {
-  return value.toLocaleString('en-US');
-}
 
 export function HerbloreCalculator() {
   const [currentXp, setCurrentXp] = useState('0');
