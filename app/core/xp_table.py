@@ -111,3 +111,13 @@ XP_TABLE: tuple[int, ...] = (
 
 def xp_at(level: int) -> int:
     return XP_TABLE[level - 1]
+
+
+def level_at(xp: int) -> int:
+    """Largest level whose XP threshold is <= xp."""
+    level = 1
+    for i, threshold in enumerate(XP_TABLE):
+        if threshold > xp:
+            break
+        level = i + 1
+    return level
