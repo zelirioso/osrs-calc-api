@@ -60,3 +60,14 @@ test('blocks an out-of-range current_xp client-side instead of submitting it', a
   );
   expect(isRangeOverflow).toBe(true);
 });
+
+test('typing after the default "0" replaces it instead of prepending', async ({ page }) => {
+  await page.goto('/');
+
+  const currentXpInput = page.getByTestId('current-xp-input');
+  await currentXpInput.click();
+  await currentXpInput.press('End');
+  await currentXpInput.pressSequentially('7'); // field starts at "0" -- naive state would show "07"
+
+  await expect(currentXpInput).toHaveValue('7');
+});
