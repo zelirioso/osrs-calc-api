@@ -108,7 +108,7 @@ Rules:
 | Calculator | Source spreadsheet | Spec | Complexity |
 |---|---|---|---|
 | Herblore | `Herblore Calculator.xlsx` | `docs/calculators/herblore.md` | Sum over a lookup table, one subtraction |
-| Fletching | `Fletching Calculator.xlsx` | *not yet written* | Ceilings, unit conversions, costs |
+| Fletching | `Fletching Calculator.xlsx` | `docs/calculators/fletching.md` | Ceilings, unit conversions, costs |
 | Giants' Foundry | `Giants Foundry Bar Calculator.xlsx` | *not yet written* | Bar-equivalent inventory across 3 metals, 3 mould scenarios |
 
 Many OSRS calculators already exist in the community — these three are the custom ones actually needed beyond what's available. More may be added later.
@@ -173,7 +173,7 @@ Ordered to front-load the two learning aims rather than leaving them until the e
 5. ~~**Write the first Playwright API test**~~ — ✅ done. Root-level `package.json`/`tsconfig.json`/`playwright.config.ts` with a `webServer` that boots uvicorn automatically; `tests/api/herblore.spec.ts` covers the worked example plus 422 validation cases.
 6. ~~**Add the minimal frontend**~~ — ✅ done. `frontend/` (Vite react-ts), `HerbloreCalculator` form wired to `/api/calculators/herblore` via the Vite dev proxy. `playwright.config.ts` now runs both servers and splits into `api`/`e2e` projects; `tests/e2e/herblore.spec.ts` drives a real browser through the form.
 7. ~~**Wire up GitHub Actions**~~ — ✅ done. `.github/workflows/test.yml`, single job: ruff + pytest, then npm installs + root tsc + frontend oxlint/build, then a version-keyed cache for the Playwright browser download before the full suite (both servers boot via `webServer`, same as locally). Also gates on frontend oxlint/tsc/build, beyond the ruff/pytest/Playwright scope originally stated here — a real gap otherwise, since Vite's dev server never type-checks. First run passed clean, 59s.
-8. **Port Fletching** — write `docs/calculators/fletching.md` first, then repeat the proven pattern.
+8. ~~**Port Fletching**~~ — ✅ done. `docs/calculators/fletching.md`, `app/calculators/fletching.py`, pytest/API/E2E tests, frontend `FletchingCalculator` with nav between calculators. Needed real investigation, not just transcription — see the doc's Logic section for how the sheet's `20+60*10+60` formula decomposes against three separate verified game mechanics. Adds `banked_arrow_shafts`, a feature beyond the original sheet.
 9. **Port Giants' Foundry** — same, and last because it's the most complex.
 10. **Revisit Claude Code repo conventions** — a deliberate pass over `FRICTION.md` and what accumulated organically in CLAUDE.md, deciding what's worth upgrading (a recurring instruction becomes a slash command, a repeated pattern becomes a custom skill).
 
