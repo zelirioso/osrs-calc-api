@@ -4,31 +4,32 @@ export interface HerbQuantities {
   tarromin: number;
   harralander: number;
   ranarr: number;
+  toadflax: number;
   irit: number;
   avantoe: number;
   kwuarm: number;
   snapdragon: number;
   cadantine: number;
   lantadyme: number;
-  toadflax: number;
   dwarf_weed: number;
   torstol: number;
 }
 
-// Matches app/calculators/herblore.py's XP_PER_POTION order
+// Herb identification/cleaning level order (Guam 3 ... Torstol 75),
+// matching app/calculators/herblore.py's XP_PER_POTION order
 export const HERB_NAMES: (keyof HerbQuantities)[] = [
   'guam',
   'marrentill',
   'tarromin',
   'harralander',
   'ranarr',
+  'toadflax',
   'irit',
   'avantoe',
   'kwuarm',
   'snapdragon',
   'cadantine',
   'lantadyme',
-  'toadflax',
   'dwarf_weed',
   'torstol',
 ];

@@ -37,6 +37,8 @@ Note the spreadsheet takes a target **XP**; the API takes a target **level** and
 
 These are the values from column C. All were checked against in-game values and match, with one exception noted under Open Questions.
 
+Ordered by herb identification/cleaning level (Guam 3 … Torstol 75), not the original spreadsheet's column order — see Open Question 6.
+
 | Herb | XP per potion | Potion (inferred) |
 |---|---|---|
 | Guam | 25 | Attack potion |
@@ -44,13 +46,13 @@ These are the values from column C. All were checked against in-game values and 
 | Tarromin | 50 | Strength potion |
 | Harralander | 67.5 | Energy potion |
 | Ranarr | 87.5 | Prayer potion |
+| Toadflax | 180 | Saradomin brew |
 | Irit | 100 | Super attack |
 | Avantoe | 117.5 | Super energy |
 | Kwuarm | 125 | Super strength |
 | Snapdragon | 142.5 | Super restore |
 | Cadantine | 150 | Super defence |
 | Lantadyme | 172.5 | Magic potion |
-| Toadflax | 180 | Saradomin brew |
 | Dwarf weed | 162.5 | Ranging potion |
 | Torstol | 150 | Super combat potion |
 
@@ -70,9 +72,9 @@ Request — all 14 herb quantities required (the original sheet's 13, plus `tors
   "target_level": 70,
   "herbs": {
     "guam": 22, "marrentill": 59, "tarromin": 208, "harralander": 150,
-    "ranarr": 63, "irit": 266, "avantoe": 290, "kwuarm": 344,
-    "snapdragon": 29, "cadantine": 306, "lantadyme": 77,
-    "toadflax": 4, "dwarf_weed": 51, "torstol": 10
+    "ranarr": 63, "toadflax": 4, "irit": 266, "avantoe": 290,
+    "kwuarm": 344, "snapdragon": 29, "cadantine": 306, "lantadyme": 77,
+    "dwarf_weed": 51, "torstol": 10
   }
 }
 ```
@@ -124,13 +126,13 @@ Directly from the spreadsheet, so it verifies the port rather than the implement
 | Tarromin | 208 | 50 | 10,400 |
 | Harralander | 150 | 67.5 | 10,125 |
 | Ranarr | 63 | 87.5 | 5,512.5 |
+| Toadflax | 4 | 180 | 720 |
 | Irit | 266 | 100 | 26,600 |
 | Avantoe | 290 | 117.5 | 34,075 |
 | Kwuarm | 344 | 125 | 43,000 |
 | Snapdragon | 29 | 142.5 | 4,132.5 |
 | Cadantine | 306 | 150 | 45,900 |
 | Lantadyme | 77 | 172.5 | 13,282.5 |
-| Toadflax | 4 | 180 | 720 |
 | Dwarf weed | 51 | 162.5 | 8,287.5 |
 | Torstol | 10 | 150 | 1,500 |
 
@@ -165,3 +167,5 @@ The spreadsheet is a pure XP-coverage calculation. It ignores:
 4. ~~**Torstol missing.**~~ **Resolved:** the original sheet only has 13 herb columns, but the real OSRS Herblore progression has 14 — Torstol was never in the source spreadsheet at all. Added as a 14th required field (`torstol`) rather than left out, since the calculator's purpose is real herb-XP coverage, not sheet fidelity for its own sake. Torstol has two real recipes (Zamorak brew, level 78, 175 XP; Super combat potion, level 90, 150 XP) — Super combat potion was picked.
 
 5. ~~**Lantadyme mislabelled as Anti-fire.**~~ **Resolved:** the value 157.5 was a real Lantadyme recipe (Antifire potion, level 69), but the intended potion is Magic potion (level 76, 172.5 XP, secondary: potato cactus) — confirmed against the OSRS Wiki. Worked example updated accordingly.
+
+6. ~~**Herb order followed the spreadsheet's arbitrary column order.**~~ **Resolved:** reordered to herb identification/cleaning level (confirmed against the OSRS Wiki) — Guam 3, Marrentill 5, Tarromin 11, Harralander 20, Ranarr 25, Toadflax 30, Irit 40, Avantoe 48, Kwuarm 54, Snapdragon 59, Cadantine 65, Lantadyme 67, Dwarf weed 70, Torstol 75. Only Toadflax's position actually changed — every other herb was already in the right relative order.

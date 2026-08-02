@@ -8,19 +8,21 @@ NAME = "herblore"
 
 # Column C of the spreadsheet: XP per potion, one fixed choice per herb.
 # See docs/calculators/herblore.md for the potion each value corresponds to.
+# Ordered by herb identification/cleaning level (Guam 3 ... Torstol 75),
+# not the original spreadsheet's column order.
 XP_PER_POTION: dict[str, float] = {
     "guam": 25.0,
     "marrentill": 37.5,
     "tarromin": 50.0,
     "harralander": 67.5,
     "ranarr": 87.5,
+    "toadflax": 180.0,
     "irit": 100.0,
     "avantoe": 117.5,
     "kwuarm": 125.0,
     "snapdragon": 142.5,
     "cadantine": 150.0,
     "lantadyme": 172.5,
-    "toadflax": 180.0,
     "dwarf_weed": 162.5,
     "torstol": 150.0,
 }
@@ -32,13 +34,13 @@ class HerbQuantities(StrictModel):
     tarromin: int = Field(ge=0)
     harralander: int = Field(ge=0)
     ranarr: int = Field(ge=0)
+    toadflax: int = Field(ge=0)
     irit: int = Field(ge=0)
     avantoe: int = Field(ge=0)
     kwuarm: int = Field(ge=0)
     snapdragon: int = Field(ge=0)
     cadantine: int = Field(ge=0)
     lantadyme: int = Field(ge=0)
-    toadflax: int = Field(ge=0)
     dwarf_weed: int = Field(ge=0)
     torstol: int = Field(ge=0)
 
