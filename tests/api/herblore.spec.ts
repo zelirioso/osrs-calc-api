@@ -30,9 +30,9 @@ test.describe('POST /api/calculators/herblore', () => {
 
     expect(response.status()).toBe(200);
     const body = await response.json();
-    expect(body.xp_banked).toBe(205142.5);
+    expect(body.xp_banked).toBe(206297.5);
     expect(body.xp_needed).toBe(269190);
-    expect(body.xp_remaining).toBe(64047.5);
+    expect(body.xp_remaining).toBe(62892.5);
     expect(body.xp_surplus).toBe(0.0);
   });
 });

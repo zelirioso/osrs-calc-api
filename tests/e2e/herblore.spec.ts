@@ -34,9 +34,9 @@ test('fills the Herblore form and shows the worked example result', async ({ pag
 
   await page.getByTestId('submit-button').click();
 
-  await expect(page.getByTestId('xp-banked')).toHaveText('205142.5');
+  await expect(page.getByTestId('xp-banked')).toHaveText('206297.5');
   await expect(page.getByTestId('xp-needed')).toHaveText('269190');
-  await expect(page.getByTestId('xp-remaining')).toHaveText('64047.5');
+  await expect(page.getByTestId('xp-remaining')).toHaveText('62892.5');
   await expect(page.getByTestId('xp-surplus')).toHaveText('0');
 });
 

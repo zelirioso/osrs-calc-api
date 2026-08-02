@@ -19,7 +19,7 @@ XP_PER_POTION: dict[str, float] = {
     "kwuarm": 125.0,
     "snapdragon": 142.5,
     "cadantine": 150.0,
-    "lantadyme": 157.5,
+    "lantadyme": 172.5,
     "toadflax": 180.0,
     "dwarf_weed": 162.5,
     "torstol": 150.0,

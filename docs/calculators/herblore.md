@@ -49,7 +49,7 @@ These are the values from column C. All were checked against in-game values and 
 | Kwuarm | 125 | Super strength |
 | Snapdragon | 142.5 | Super restore |
 | Cadantine | 150 | Super defence |
-| Lantadyme | 157.5 | Anti-fire potion |
+| Lantadyme | 172.5 | Magic potion |
 | Toadflax | 180 | Saradomin brew |
 | Dwarf weed | 162.5 | Ranging potion |
 | Torstol | 150 | Super combat potion |
@@ -81,9 +81,9 @@ Response:
 
 ```json
 {
-  "xp_banked": 205142.5,
+  "xp_banked": 206297.5,
   "xp_needed": 269190,
-  "xp_remaining": 64047.5,
+  "xp_remaining": 62892.5,
   "xp_surplus": 0.0,
   "breakdown": [
     { "herb": "guam", "quantity": 22, "xp_per_potion": 25.0, "xp": 550.0 }
@@ -129,7 +129,7 @@ Directly from the spreadsheet, so it verifies the port rather than the implement
 | Kwuarm | 344 | 125 | 43,000 |
 | Snapdragon | 29 | 142.5 | 4,132.5 |
 | Cadantine | 306 | 150 | 45,900 |
-| Lantadyme | 77 | 157.5 | 12,127.5 |
+| Lantadyme | 77 | 172.5 | 13,282.5 |
 | Toadflax | 4 | 180 | 720 |
 | Dwarf weed | 51 | 162.5 | 8,287.5 |
 | Torstol | 10 | 150 | 1,500 |
@@ -137,9 +137,9 @@ Directly from the spreadsheet, so it verifies the port rather than the implement
 **Expected output:**
 
 ```
-xp_banked    = 205142.5
+xp_banked    = 206297.5
 xp_needed    = 737627 − 468437 = 269190
-xp_remaining = 737627 − (468437 + 205142.5) = 64047.5
+xp_remaining = 737627 − (468437 + 206297.5) = 62892.5
 xp_surplus   = 0.0
 ```
 
@@ -163,3 +163,5 @@ The spreadsheet is a pure XP-coverage calculation. It ignores:
 3. ~~**Negative results.**~~ **Resolved:** clamp both `xp_needed` and `xp_remaining` to 0, expose the excess as a single `xp_surplus` field computed from `current_xp + xp_banked` as one total, rather than two independent surplus concepts. See the formula under **Proposed API** above.
 
 4. ~~**Torstol missing.**~~ **Resolved:** the original sheet only has 13 herb columns, but the real OSRS Herblore progression has 14 — Torstol was never in the source spreadsheet at all. Added as a 14th required field (`torstol`) rather than left out, since the calculator's purpose is real herb-XP coverage, not sheet fidelity for its own sake. Torstol has two real recipes (Zamorak brew, level 78, 175 XP; Super combat potion, level 90, 150 XP) — Super combat potion was picked.
+
+5. ~~**Lantadyme mislabelled as Anti-fire.**~~ **Resolved:** the value 157.5 was a real Lantadyme recipe (Antifire potion, level 69), but the intended potion is Magic potion (level 76, 172.5 XP, secondary: potato cactus) — confirmed against the OSRS Wiki. Worked example updated accordingly.

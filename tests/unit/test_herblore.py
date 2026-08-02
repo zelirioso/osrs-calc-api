@@ -43,9 +43,9 @@ def test_worked_example_from_spec():
 
     response = calculate(request)
 
-    assert response.xp_banked == pytest.approx(205142.5)
+    assert response.xp_banked == pytest.approx(206297.5)
     assert response.xp_needed == 269190
-    assert response.xp_remaining == pytest.approx(64047.5)
+    assert response.xp_remaining == pytest.approx(62892.5)
     assert response.xp_surplus == 0.0
 
 
@@ -111,4 +111,4 @@ def test_xp_sums_are_exact_not_approximate():
 
     response = calculate(request)
 
-    assert response.xp_banked == 1552.5
+    assert response.xp_banked == 1567.5
