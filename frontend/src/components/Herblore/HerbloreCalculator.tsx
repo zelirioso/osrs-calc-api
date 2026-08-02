@@ -141,22 +141,40 @@ export function HerbloreCalculator() {
         </button>
       </form>
 
-      {error && <p data-testid="error-message">{error}</p>}
+      {error && (
+        <p data-testid="error-message" className="error-message">
+          {error}
+        </p>
+      )}
 
       {result && (
         <div data-testid="result" className="result">
-          <p>
-            XP banked: <span data-testid="xp-banked">{result.xp_banked}</span>
-          </p>
-          <p>
-            XP needed: <span data-testid="xp-needed">{result.xp_needed}</span>
-          </p>
-          <p>
-            XP remaining: <span data-testid="xp-remaining">{result.xp_remaining}</span>
-          </p>
-          <p>
-            XP surplus: <span data-testid="xp-surplus">{result.xp_surplus}</span>
-          </p>
+          <div className="stats">
+            <div className="stat">
+              <span className="stat-label">XP banked</span>
+              <span className="stat-value" data-testid="xp-banked">
+                {result.xp_banked}
+              </span>
+            </div>
+            <div className="stat">
+              <span className="stat-label">XP needed</span>
+              <span className="stat-value" data-testid="xp-needed">
+                {result.xp_needed}
+              </span>
+            </div>
+            <div className="stat">
+              <span className="stat-label">XP remaining</span>
+              <span className="stat-value" data-testid="xp-remaining">
+                {result.xp_remaining}
+              </span>
+            </div>
+            <div className="stat">
+              <span className="stat-label">XP surplus</span>
+              <span className="stat-value" data-testid="xp-surplus">
+                {result.xp_surplus}
+              </span>
+            </div>
+          </div>
 
           <table>
             <thead>
