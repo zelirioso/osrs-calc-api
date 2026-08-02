@@ -72,7 +72,7 @@ Request — all 14 herb quantities required (the original sheet's 13, plus `tors
     "guam": 22, "marrentill": 59, "tarromin": 208, "harralander": 150,
     "ranarr": 63, "irit": 266, "avantoe": 290, "kwuarm": 344,
     "snapdragon": 29, "cadantine": 306, "lantadyme": 77,
-    "toadflax": 4, "dwarf_weed": 51, "torstol": 0
+    "toadflax": 4, "dwarf_weed": 51, "torstol": 10
   }
 }
 ```
@@ -81,9 +81,9 @@ Response:
 
 ```json
 {
-  "xp_banked": 203642.5,
+  "xp_banked": 205142.5,
   "xp_needed": 269190,
-  "xp_remaining": 65547.5,
+  "xp_remaining": 64047.5,
   "xp_surplus": 0.0,
   "breakdown": [
     { "herb": "guam", "quantity": 22, "xp_per_potion": 25.0, "xp": 550.0 }
@@ -110,7 +110,7 @@ Validation (Pydantic constraints → automatic 422):
 
 ## Worked example — use as the first test
 
-Directly from the spreadsheet, so it verifies the port rather than the implementation's own assumptions.
+Directly from the spreadsheet, so it verifies the port rather than the implementation's own assumptions — except `torstol`, which has no spreadsheet data and uses an invented quantity (10) to exercise it within the same worked example.
 
 **Input:** `current_xp = 468437`, `target_level = 70`, herb quantities as in the request above.
 
@@ -131,18 +131,18 @@ Directly from the spreadsheet, so it verifies the port rather than the implement
 | Lantadyme | 77 | 157.5 | 12,127.5 |
 | Toadflax | 4 | 180 | 720 |
 | Dwarf weed | 51 | 162.5 | 8,287.5 |
-| Torstol | 0 | 150 | 0 |
+| Torstol | 10 | 150 | 1,500 |
 
 **Expected output:**
 
 ```
-xp_banked    = 203642.5
+xp_banked    = 205142.5
 xp_needed    = 737627 − 468437 = 269190
-xp_remaining = 737627 − (468437 + 203642.5) = 65547.5
+xp_remaining = 737627 − (468437 + 205142.5) = 64047.5
 xp_surplus   = 0.0
 ```
 
-Useful supporting assertions: `xp_at(70) == 737627`, and `current_xp = 468437` sits in level 65 (level 66 starts at 496,254). `torstol = 0` here since the original spreadsheet has no data for it — a separate test covers a nonzero Torstol quantity.
+Useful supporting assertions: `xp_at(70) == 737627`, and `current_xp = 468437` sits in level 65 (level 66 starts at 496,254).
 
 ## Scope — what this deliberately does not model
 

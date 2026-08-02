@@ -16,7 +16,7 @@ WORKED_EXAMPLE_HERBS = HerbQuantities(
     lantadyme=77,
     toadflax=4,
     dwarf_weed=51,
-    torstol=0,
+    torstol=10,  # no spreadsheet data for this herb; invented to exercise it here
 )
 
 ZERO_HERBS = HerbQuantities(
@@ -43,9 +43,9 @@ def test_worked_example_from_spec():
 
     response = calculate(request)
 
-    assert response.xp_banked == pytest.approx(203642.5)
+    assert response.xp_banked == pytest.approx(205142.5)
     assert response.xp_needed == 269190
-    assert response.xp_remaining == pytest.approx(65547.5)
+    assert response.xp_remaining == pytest.approx(64047.5)
     assert response.xp_surplus == 0.0
 
 
@@ -59,6 +59,11 @@ def test_breakdown_matches_spreadsheet_column_d():
     assert guam.xp_per_potion == 25.0
     assert guam.xp == 550.0
 
+    torstol = next(item for item in response.breakdown if item.herb == "torstol")
+    assert torstol.quantity == 10
+    assert torstol.xp_per_potion == 150.0
+    assert torstol.xp == 1500.0
+
 
 def test_already_at_target_level_clamps_to_zero():
     herbs = ZERO_HERBS.model_copy()
@@ -71,18 +76,17 @@ def test_already_at_target_level_clamps_to_zero():
     assert response.xp_surplus == 0.0
 
 
-def test_torstol_contributes_to_xp_banked():
-    # torstol is 0 in the worked example (absent from the original spreadsheet),
-    # so this exercises it directly: Super combat potion, 150 XP each.
-    herbs = ZERO_HERBS.model_copy(update={"torstol": 10})
-    request = Request(current_xp=468437, target_level=70, herbs=herbs)
+def test_already_past_target_plus_banked_herbs_both_count_toward_surplus():
+    # current_xp alone already exceeds the target, and there are banked herbs
+    # on top -- xp_surplus should reflect both sources, not just one.
+    herbs = ZERO_HERBS.model_copy(update={"kwuarm": 100})
+    request = Request(current_xp=800000, target_level=70, herbs=herbs)
 
     response = calculate(request)
 
-    torstol = next(item for item in response.breakdown if item.herb == "torstol")
-    assert torstol.xp_per_potion == 150.0
-    assert torstol.xp == 1500.0
-    assert response.xp_banked == pytest.approx(1500.0)
+    assert response.xp_needed == 0
+    assert response.xp_remaining == 0.0
+    assert response.xp_surplus == pytest.approx(74873.0)
 
 
 def test_banked_herbs_alone_cover_the_gap():
