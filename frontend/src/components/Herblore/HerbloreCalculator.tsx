@@ -14,6 +14,12 @@ function stripLeadingZeros(value: string): string {
   return value.replace(/^0+(?=\d)/, '');
 }
 
+// Comma-groups displayed numbers (e.g. 206297.5 -> "206,297.5"). Display only
+// -- never applied to input values, which must stay plain for type="number".
+function formatNumber(value: number): string {
+  return value.toLocaleString('en-US');
+}
+
 export function HerbloreCalculator() {
   const [currentXp, setCurrentXp] = useState('0');
   const [currentLevel, setCurrentLevel] = useState(String(levelAt(0)));
@@ -153,25 +159,25 @@ export function HerbloreCalculator() {
             <div className="stat">
               <span className="stat-label">XP banked</span>
               <span className="stat-value" data-testid="xp-banked">
-                {result.xp_banked}
+                {formatNumber(result.xp_banked)}
               </span>
             </div>
             <div className="stat">
               <span className="stat-label">XP needed</span>
               <span className="stat-value" data-testid="xp-needed">
-                {result.xp_needed}
+                {formatNumber(result.xp_needed)}
               </span>
             </div>
             <div className="stat">
               <span className="stat-label">XP remaining</span>
               <span className="stat-value" data-testid="xp-remaining">
-                {result.xp_remaining}
+                {formatNumber(result.xp_remaining)}
               </span>
             </div>
             <div className="stat">
               <span className="stat-label">XP surplus</span>
               <span className="stat-value" data-testid="xp-surplus">
-                {result.xp_surplus}
+                {formatNumber(result.xp_surplus)}
               </span>
             </div>
           </div>
@@ -189,9 +195,9 @@ export function HerbloreCalculator() {
               {result.breakdown.map((item) => (
                 <tr key={item.herb}>
                   <td>{item.herb}</td>
-                  <td>{item.quantity}</td>
-                  <td>{item.xp_per_potion}</td>
-                  <td>{item.xp}</td>
+                  <td>{formatNumber(item.quantity)}</td>
+                  <td>{formatNumber(item.xp_per_potion)}</td>
+                  <td>{formatNumber(item.xp)}</td>
                 </tr>
               ))}
             </tbody>

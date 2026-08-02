@@ -10,13 +10,13 @@ const WORKED_EXAMPLE = {
     tarromin: 208,
     harralander: 150,
     ranarr: 63,
+    toadflax: 4,
     irit: 266,
     avantoe: 290,
     kwuarm: 344,
     snapdragon: 29,
     cadantine: 306,
     lantadyme: 77,
-    toadflax: 4,
     dwarf_weed: 51,
     torstol: 10,
   },
@@ -34,9 +34,9 @@ test('fills the Herblore form and shows the worked example result', async ({ pag
 
   await page.getByTestId('submit-button').click();
 
-  await expect(page.getByTestId('xp-banked')).toHaveText('206297.5');
-  await expect(page.getByTestId('xp-needed')).toHaveText('269190');
-  await expect(page.getByTestId('xp-remaining')).toHaveText('62892.5');
+  await expect(page.getByTestId('xp-banked')).toHaveText('206,297.5');
+  await expect(page.getByTestId('xp-needed')).toHaveText('269,190');
+  await expect(page.getByTestId('xp-remaining')).toHaveText('62,892.5');
   await expect(page.getByTestId('xp-surplus')).toHaveText('0');
 });
 
@@ -93,4 +93,22 @@ test('entering current XP fills current level with the level it falls in', async
   // 468437 sits in level 65 (level 66 starts at 496,254) -- this direction
   // is exact, unlike level -> XP above.
   await expect(page.getByTestId('current-level-input')).toHaveValue('65');
+});
+
+test('submitting after only setting current level uses the auto-filled XP, not a stale value', async ({
+  page,
+}) => {
+  await page.goto('/');
+
+  // deliberately never touch current-xp-input directly -- only its
+  // auto-fill from current level should reach the request
+  await page.getByTestId('current-level-input').fill('65');
+  await page.getByTestId('target-level-input').fill('70');
+
+  await page.getByTestId('submit-button').click();
+
+  // level 65's threshold is 449428. If the untouched default (0) had
+  // been sent instead, xp_needed would be 737627, not 288199.
+  await expect(page.getByTestId('xp-needed')).toHaveText('288,199');
+  await expect(page.getByTestId('xp-remaining')).toHaveText('288,199');
 });
