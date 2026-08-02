@@ -171,7 +171,7 @@ Ordered to front-load the two learning aims rather than leaving them until the e
 3. ~~**Scaffold the repo with Claude Code**~~ — ✅ done. uv/`pyproject.toml`, FastAPI skeleton, ruff, folder structure, minimal `CLAUDE.md`.
 4. ~~**Build Herblore end-to-end**~~ — ✅ done. `app/calculators/herblore.py` + `app/core/xp_table.py`, pytest unit tests against the worked example. Along the way, corrected Marrentill/Toadflax XP values and added Torstol (14th herb) against the OSRS Wiki — see `docs/calculators/herblore.md` Open Questions.
 5. ~~**Write the first Playwright API test**~~ — ✅ done. Root-level `package.json`/`tsconfig.json`/`playwright.config.ts` with a `webServer` that boots uvicorn automatically; `tests/api/herblore.spec.ts` covers the worked example plus 422 validation cases.
-6. **Add the minimal frontend** (Vite react-ts form) for Herblore, then a Playwright E2E test against it — second half of the Playwright learning (API vs. browser testing).
+6. ~~**Add the minimal frontend**~~ — ✅ done. `frontend/` (Vite react-ts), `HerbloreCalculator` form wired to `/api/calculators/herblore` via the Vite dev proxy. `playwright.config.ts` now runs both servers and splits into `api`/`e2e` projects; `tests/e2e/herblore.spec.ts` drives a real browser through the form.
 7. **Wire up GitHub Actions** to run ruff, pytest and the Playwright suite. Budget real time for this: browser installs, caching, and starting two servers make it the fiddliest step in the plan, not the most mechanical.
 8. **Port Fletching** — write `docs/calculators/fletching.md` first, then repeat the proven pattern.
 9. **Port Giants' Foundry** — same, and last because it's the most complex.
