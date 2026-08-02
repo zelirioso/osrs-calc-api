@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
+    "dev": "concurrently -n backend,frontend -c blue,green \"uv run uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload\" \"npm run dev --prefix frontend -- --host 127.0.0.1 --port 5173\"",
     "test": "playwright test",
     "test:api": "playwright test --project=api",
     "test:e2e": "playwright test --project=e2e",
@@ -11,6 +12,7 @@
   "devDependencies": {
     "@playwright/test": "^1.62.1",
     "@types/node": "^26.1.2",
+    "concurrently": "^10.0.4",
     "typescript": "^7.0.2"
   }
 }
