@@ -48,3 +48,11 @@ Rules:
 - Prices and other economic values are optional `Request` fields with sensible defaults, never hardcoded inside `calculate`.
 - Shared game data (XP table, default prices) lives in `app/core/`, never duplicated per calculator.
 - Registering a new calculator is one import + one append to the `routers` list in `app/calculators/__init__.py`. No other file changes. Explicit over auto-discovery — the wiring stays greppable.
+
+## After every change
+
+Not just "run the tests and check they're green" — the tests can pass while asserting a wrong value if it was updated to match a mistake instead of the correct answer. Before considering any change done:
+
+1. Run the full suite: `uv run pytest`, `uv run ruff check . && uv run ruff format --check .`, `npx tsc --noEmit`, `npx playwright test`.
+2. If the change touches a calculator's data or logic (an XP value, a formula, a clamp rule), independently recompute the expected numbers rather than trusting that "still passes" means "still correct" — this project has already had multiple herb XP values need real correction after being wrong-but-internally-consistent.
+3. Propagate data/logic changes everywhere they're duplicated: the calculator module, `docs/calculators/<name>.md`, pytest, Playwright API tests, Playwright E2E tests. A change that updates only some of these is incomplete, even if the ones it touched still pass.
