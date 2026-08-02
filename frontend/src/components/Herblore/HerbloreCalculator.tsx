@@ -1,4 +1,5 @@
 import { useState, type SubmitEvent } from 'react';
+import { levelAt, xpAt } from '../../core/xpTable';
 import { HERB_NAMES, type HerbQuantities, type HerbloreResponse } from './types';
 
 type HerbQuantityInputs = Record<keyof HerbQuantities, string>;
@@ -15,6 +16,7 @@ function stripLeadingZeros(value: string): string {
 
 export function HerbloreCalculator() {
   const [currentXp, setCurrentXp] = useState('0');
+  const [currentLevel, setCurrentLevel] = useState(String(levelAt(0)));
   const [targetLevel, setTargetLevel] = useState('1');
   const [herbs, setHerbs] = useState<HerbQuantityInputs>(ZERO_HERBS);
   const [result, setResult] = useState<HerbloreResponse | null>(null);
@@ -46,6 +48,30 @@ export function HerbloreCalculator() {
     setResult(await response.json());
   }
 
+  // current level is a UI convenience only -- it's never sent to the
+  // backend, only current_xp is. Level -> XP can only give the level's
+  // starting threshold (an approximation), since a level is a range of
+  // XP, not a single value; XP -> level is fully precise.
+  function handleCurrentXpChange(value: string) {
+    const stripped = stripLeadingZeros(value);
+    setCurrentXp(stripped);
+
+    const xp = Number(stripped);
+    if (!Number.isNaN(xp)) {
+      setCurrentLevel(String(levelAt(xp)));
+    }
+  }
+
+  function handleCurrentLevelChange(value: string) {
+    const stripped = stripLeadingZeros(value);
+    setCurrentLevel(stripped);
+
+    const level = Number(stripped);
+    if (!Number.isNaN(level) && level >= 1 && level <= 99) {
+      setCurrentXp(String(xpAt(level)));
+    }
+  }
+
   return (
     <div className="calculator">
       <h1>Herblore Calculator</h1>
@@ -59,7 +85,19 @@ export function HerbloreCalculator() {
             value={currentXp}
             min={0}
             max={200_000_000}
-            onChange={(event) => setCurrentXp(stripLeadingZeros(event.target.value))}
+            onChange={(event) => handleCurrentXpChange(event.target.value)}
+          />
+        </label>
+
+        <label>
+          Current level (fills XP with the level's starting threshold)
+          <input
+            type="number"
+            data-testid="current-level-input"
+            value={currentLevel}
+            min={1}
+            max={99}
+            onChange={(event) => handleCurrentLevelChange(event.target.value)}
           />
         </label>
 

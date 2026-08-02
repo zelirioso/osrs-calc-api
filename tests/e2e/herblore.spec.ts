@@ -71,3 +71,26 @@ test('typing after the default "0" replaces it instead of prepending', async ({ 
 
   await expect(currentXpInput).toHaveValue('7');
 });
+
+test('entering a current level fills current XP with that level\'s starting threshold', async ({
+  page,
+}) => {
+  await page.goto('/');
+
+  await page.getByTestId('current-level-input').fill('65');
+
+  // level 65's threshold, not the worked example's 468437 -- a level is a
+  // range of XP, so this can only ever be an approximation, not the exact
+  // XP a player at some arbitrary point in level 65 actually has.
+  await expect(page.getByTestId('current-xp-input')).toHaveValue('449428');
+});
+
+test('entering current XP fills current level with the level it falls in', async ({ page }) => {
+  await page.goto('/');
+
+  await page.getByTestId('current-xp-input').fill(String(WORKED_EXAMPLE.current_xp));
+
+  // 468437 sits in level 65 (level 66 starts at 496,254) -- this direction
+  // is exact, unlike level -> XP above.
+  await expect(page.getByTestId('current-level-input')).toHaveValue('65');
+});
