@@ -167,7 +167,7 @@ Note the two `package.json` files: one at root for Playwright (its tests span bo
 Ordered to front-load the two learning aims rather than leaving them until the end.
 
 1. ~~**Set up an isolated dev environment**~~ — ✅ done. Devcontainer (Python 3.12 + Node + claude-code feature) scoped to this project folder, running inside WSL, so Claude Code has no reach into home files or other projects.
-2. **Initialise git and create the public GitHub repo** — needed before CI can run at all.
+2. ~~**Initialise git and create the public GitHub repo**~~ — ✅ done. Repo pushed to `https://github.com/zelirioso/osrs-calc-api`, `gh` authenticated over HTTPS.
 3. **Scaffold the repo with Claude Code** — uv/`pyproject.toml`, FastAPI skeleton, ruff, folder structure, and a *minimal* CLAUDE.md covering only what's already certain (tech stack, folder structure, the calculator module contract, how to run tests). Real practice, not guessing, since it's all decided.
 4. **Build Herblore end-to-end** — API endpoint plus pytest unit tests against the worked example in its spec. Manual input only. Proves the module contract before repeating it twice.
 5. **Write the first Playwright API test** against that endpoint — the core Playwright learning starts here, on the simplest possible surface.
