@@ -1,15 +1,22 @@
 import { useState, type SubmitEvent } from 'react';
 import { HERB_NAMES, type HerbQuantities, type HerbloreResponse } from './types';
 
+type HerbQuantityInputs = Record<keyof HerbQuantities, string>;
+
 const ZERO_HERBS = HERB_NAMES.reduce(
-  (acc, herb) => ({ ...acc, [herb]: 0 }),
-  {} as HerbQuantities,
+  (acc, herb) => ({ ...acc, [herb]: '0' }),
+  {} as HerbQuantityInputs,
 );
 
+// Strips redundant leading zeros (e.g. "07" -> "7") without touching a lone "0".
+function stripLeadingZeros(value: string): string {
+  return value.replace(/^0+(?=\d)/, '');
+}
+
 export function HerbloreCalculator() {
-  const [currentXp, setCurrentXp] = useState(0);
-  const [targetLevel, setTargetLevel] = useState(1);
-  const [herbs, setHerbs] = useState<HerbQuantities>(ZERO_HERBS);
+  const [currentXp, setCurrentXp] = useState('0');
+  const [targetLevel, setTargetLevel] = useState('1');
+  const [herbs, setHerbs] = useState<HerbQuantityInputs>(ZERO_HERBS);
   const [result, setResult] = useState<HerbloreResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -22,9 +29,12 @@ export function HerbloreCalculator() {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        current_xp: currentXp,
-        target_level: targetLevel,
-        herbs,
+        current_xp: Number(currentXp),
+        target_level: Number(targetLevel),
+        herbs: HERB_NAMES.reduce(
+          (acc, herb) => ({ ...acc, [herb]: Number(herbs[herb]) }),
+          {} as HerbQuantities,
+        ),
       }),
     });
 
@@ -49,7 +59,7 @@ export function HerbloreCalculator() {
             value={currentXp}
             min={0}
             max={200_000_000}
-            onChange={(event) => setCurrentXp(Number(event.target.value))}
+            onChange={(event) => setCurrentXp(stripLeadingZeros(event.target.value))}
           />
         </label>
 
@@ -61,7 +71,7 @@ export function HerbloreCalculator() {
             value={targetLevel}
             min={1}
             max={99}
-            onChange={(event) => setTargetLevel(Number(event.target.value))}
+            onChange={(event) => setTargetLevel(stripLeadingZeros(event.target.value))}
           />
         </label>
 
@@ -77,7 +87,10 @@ export function HerbloreCalculator() {
                   value={herbs[herb]}
                   min={0}
                   onChange={(event) =>
-                    setHerbs((prev) => ({ ...prev, [herb]: Number(event.target.value) }))
+                    setHerbs((prev) => ({
+                      ...prev,
+                      [herb]: stripLeadingZeros(event.target.value),
+                    }))
                   }
                 />
               </label>
