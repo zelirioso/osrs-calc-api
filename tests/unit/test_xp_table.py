@@ -17,3 +17,8 @@ def test_level_70_matches_herblore_spreadsheet():
 
 def test_level_99_max():
     assert xp_at(99) == 13034431
+
+
+def test_strictly_increasing_across_the_whole_table():
+    # catches any future transcription slip if XP_TABLE is ever hand-edited
+    assert all(xp_at(level + 1) > xp_at(level) for level in range(1, 99))

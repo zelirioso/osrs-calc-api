@@ -100,3 +100,15 @@ def test_banked_herbs_alone_cover_the_gap():
     assert response.xp_needed == 269190
     assert response.xp_remaining == 0.0
     assert response.xp_surplus == pytest.approx(105810.0)
+
+
+def test_xp_sums_are_exact_not_approximate():
+    # Every XP-per-potion value is a multiple of 2.5, which is exactly
+    # representable in binary floating point -- so summing them shouldn't
+    # drift, and this is safe to assert with == rather than pytest.approx.
+    herbs = ZERO_HERBS.model_copy(update=dict.fromkeys(HerbQuantities.model_fields, 1))
+    request = Request(current_xp=0, target_level=1, herbs=herbs)
+
+    response = calculate(request)
+
+    assert response.xp_banked == 1552.5
