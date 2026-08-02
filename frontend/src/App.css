@@ -71,6 +71,30 @@
   gap: 0.75rem;
 }
 
+.item-grid {
+  display: grid;
+  grid-template-columns: 1fr repeat(3, 5rem);
+  gap: 0.5rem 0.75rem;
+  align-items: center;
+}
+
+.item-grid-header {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.item-grid-label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  text-transform: capitalize;
+}
+
+.item-grid input {
+  padding: 0.3rem 0.4rem;
+  text-align: right;
+}
+
 .calculator label {
   display: flex;
   flex-direction: column;
@@ -163,6 +187,18 @@
   border-collapse: collapse;
   width: 100%;
   font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+}
+
+.result caption {
+  text-align: left;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.result td.negative {
+  color: var(--danger);
+  font-weight: 600;
 }
 
 .result th,

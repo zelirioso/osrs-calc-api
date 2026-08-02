@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { HerbloreCalculator } from './components/Herblore/HerbloreCalculator';
 import { FletchingCalculator } from './components/Fletching/FletchingCalculator';
+import { GiantsFoundryCalculator } from './components/GiantsFoundry/GiantsFoundryCalculator';
 import './App.css';
 
 const CALCULATORS = {
   herblore: { label: 'Herblore', Component: HerbloreCalculator },
   fletching: { label: 'Fletching', Component: FletchingCalculator },
+  'giants-foundry': { label: "Giants' Foundry", Component: GiantsFoundryCalculator },
 } as const;
 
 type CalculatorKey = keyof typeof CALCULATORS;
